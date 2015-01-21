@@ -5,6 +5,8 @@ gemspec
 
 group :development do
   gem 'pry'
+  gem 'guard'
+  gem 'guard-rspec'
 end
 
 group :test do

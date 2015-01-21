@@ -1,23 +1,27 @@
+require 'ruby_skynet/algorithms/mean'
+require 'ruby_skynet/algorithms/variance'
+
 module RubySkynet
   module Algorithms
     class SimpleLinearRegression
-      attr_reader :x_coordinates, :y_coordinates
+      attr_reader :x_coordinates, :y_coordinates, :x_mean, :y_mean
 
       def initialize(coordinates)
         raise "You should pass in an array of coordinates" if coordinates.empty?
 
         @x_coordinates = coordinates.map(&:first)
         @y_coordinates = coordinates.map(&:last)
+        @x_mean        = RubySkynet::Algorithms::Mean.new.call(@x_coordinates)
+        @y_mean        = RubySkynet::Algorithms::Mean.new.call(@y_coordinates)
       end
 
+      #A = MY - bMX
       def y_intercept
-        mean(y_coordinates) - (slope * mean(x_coordinates))
+        y_mean - (slope * x_mean)
       end
 
+      #b = r sY/sX
       def slope
-        x_mean = mean(x_coordinates)
-        y_mean = mean(y_coordinates)
-
         numerator = (0...x_coordinates.length).reduce(0) do |sum, i|
           sum + ((x_coordinates[i] - x_mean) * (y_coordinates[i] - y_mean))
         end
@@ -27,11 +31,6 @@ module RubySkynet
         end
 
         (numerator / denominator)
-      end
-
-      def mean(values)
-        total = values.reduce(&:+)
-        total.to_f / values.length
       end
     end
   end
