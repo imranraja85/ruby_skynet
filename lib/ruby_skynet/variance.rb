@@ -1,3 +1,5 @@
+require 'ruby_skynet/mean'
+
 # Variance is the the average of the squared differences from the mean.
 #
 # Formula: 
@@ -7,14 +9,12 @@
 #
 
 module RubySkynet
-  module Algorithms
-    class Variance
-      def call(values)
-        mean        = values.inject(:+) / values.count
-        squared_sum = values.reduce(0) {|sum, value| sum += (value - mean) ** 2}
+  class Variance
+    def call(values)
+      mean        = RubySkynet::Mean.new.call(values)
+      squared_sum = values.reduce(0) {|sum, value| sum += (value - mean) ** 2}
 
-        squared_sum / values.count
-      end
+      squared_sum.to_f / values.count
     end
   end
 end

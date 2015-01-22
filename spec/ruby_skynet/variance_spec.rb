@@ -1,6 +1,6 @@
-require "ruby_skynet/algorithms/variance"
+require "ruby_skynet/variance"
 
-describe RubySkynet::Algorithms::Variance do
+describe RubySkynet::Variance do
   subject {described_class}
 
   it "calculates the variance" do

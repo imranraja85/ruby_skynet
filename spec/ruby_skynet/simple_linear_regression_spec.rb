@@ -1,7 +1,7 @@
-require 'ruby_skynet/algorithms/simple_linear_regression'
-require "ruby_skynet/algorithms/standard_deviation"
+require 'ruby_skynet/simple_linear_regression'
+require "ruby_skynet/standard_deviation"
 
-describe RubySkynet::Algorithms::SimpleLinearRegression do
+describe RubySkynet::SimpleLinearRegression do
   subject {described_class}
 
   it "has a y intercept of 1 and slope of 0" do
