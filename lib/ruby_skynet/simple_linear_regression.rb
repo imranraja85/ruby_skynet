@@ -10,8 +10,8 @@ module RubySkynet
 
       @x_coordinates = coordinates.map(&:first)
       @y_coordinates = coordinates.map(&:last)
-      @x_mean        = RubySkynet::Mean.new.call(@x_coordinates)
-      @y_mean        = RubySkynet::Mean.new.call(@y_coordinates)
+      @x_mean        = RubySkynet::Mean.call({values: @x_coordinates})
+      @y_mean        = RubySkynet::Mean.call({values: @y_coordinates})
     end
 
     #A = MY - bMX
@@ -25,9 +25,7 @@ module RubySkynet
         sum + ((x_coordinates[i] - x_mean) * (y_coordinates[i] - y_mean))
       end
 
-      denominator = x_coordinates.reduce(0) do |sum, x|
-        sum + ((x - x_mean) ** 2)
-      end
+      denominator = RubySkynet::SumOfSquares.call({values: x_coordinates})
 
       (numerator / denominator)
     end

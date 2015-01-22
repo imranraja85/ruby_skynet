@@ -1,4 +1,5 @@
-require 'ruby_skynet/mean'
+require 'ruby_skynet/sum_of_squares'
+require 'ruby_skynet/callable'
 
 # Variance is the the average of the squared differences from the mean.
 #
@@ -10,9 +11,15 @@ require 'ruby_skynet/mean'
 
 module RubySkynet
   class Variance
-    def call(values)
-      mean        = RubySkynet::Mean.new.call(values)
-      squared_sum = values.reduce(0) {|sum, value| sum += (value - mean) ** 2}
+    extend RubySkynet::Callable
+    attr_reader :values
+
+    def initialize(options = {})
+      @values = options[:values]
+    end
+
+    def call
+      squared_sum = RubySkynet::SumOfSquares.call({values: values})
 
       squared_sum.to_f / values.count
     end

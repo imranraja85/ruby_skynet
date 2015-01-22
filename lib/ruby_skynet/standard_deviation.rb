@@ -17,7 +17,7 @@ module RubySkynet
     end
 
     def call(options = {})
-      Math.sqrt(RubySkynet::Variance.new.call(values))
+      Math.sqrt(RubySkynet::Variance.call({options: values}))
     end
 
   end
